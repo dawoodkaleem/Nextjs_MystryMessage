@@ -19,6 +19,7 @@ message:"Username is already taken"
       },{status:400})
     }
     const existingUserByEmail= await UserModel.findOne({email})
+    const verifyCode= Math.floor(100000+Math.random() * 900000).toString()
     if(existingUserByEmail){
       true //TODO BACK HERE
     }else{
@@ -27,7 +28,14 @@ message:"Username is already taken"
       expiryDate.setHours(expiryDate.getHours()+1)
 
       new UserModel({
-        
+         username,
+          email,
+          password:hashPassword,
+        verifyCode,
+        verifyCodeExpiry:expiryDate;
+        isVerified:boolean;
+        isAcceptingMessage:boolean;
+        messages:Message[]
       })
     }
   } catch (error) {
