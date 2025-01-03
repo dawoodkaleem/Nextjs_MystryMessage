@@ -18,7 +18,18 @@ success:false,
 message:"Username is already taken"
       },{status:400})
     }
-    
+    const existingUserByEmail= await UserModel.findOne({email})
+    if(existingUserByEmail){
+      true //TODO BACK HERE
+    }else{
+      const hashedPassword= await bcrypt.hash(password,10)
+      const expiryDate =new Date();
+      expiryDate.setHours(expiryDate.getHours()+1)
+
+      new UserModel({
+        
+      })
+    }
   } catch (error) {
     console.error("Error registring user",error )
     return Response.json({
